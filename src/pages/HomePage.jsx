@@ -17,3 +17,45 @@
 
 import React from 'react';
 import data from '../../data.json';
+import ImageUploaderForm from "../components/ImageUploaderForm.jsx";
+import FeedList from "../components/FeedList.jsx";
+
+class HomePage extends React.Component {
+	constructor(props) {
+		super(props);
+        this.state = {
+			photos: data.photos
+        }
+	}
+
+    handleAddPhoto = (url) => {
+    	let lastPhoto = this.state.photos[(this.state.photos.length - 1)]
+    	let { id } = lastPhoto;
+    	let photo = {
+    		"id": id + 1,
+    		"likes": 0,
+    		"title": "Default",
+    		"url": url,
+    		"userLiked": false
+    	}
+
+    	// If you pass this.setState a function instead of an object, you have access to the previous state
+    	this.setState((prevState) => {
+    		return {
+    			photos: prevState.photos.concat([photo])
+    		}
+    	})
+    }
+
+    render() {  
+    	console.log(this.state.photos);  	
+    	return (
+    	    <div className="HomePage">
+                <ImageUploaderForm handleAddPhoto={ this.handleAddPhoto }/>
+                <FeedList photos={ this.state.photos }/>
+    	    </div>
+    	);
+    }
+}
+
+export default HomePage

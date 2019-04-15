@@ -19,3 +19,39 @@
 	 // hint: take the total likes as a prop, and convert it to state
 
 import React from 'react';
+
+class Likes extends React.Component {
+    constructor(props) {
+      	super(props)
+      	const { likes } = props;
+
+    	this.state = {
+    		isLiked: false,
+    		numLikes: likes
+    	}
+    }
+
+    handleClick = () => {
+    	let numLikes = this.state.isLiked ? (this.state.numLikes - 1) : (this.state.numLikes + 1);
+
+    	this.setState({
+            isLiked: !this.state.isLiked,
+            numLikes: numLikes
+        })
+    }
+
+	render() {
+	    const text = this.state.isLiked ? "Liked" : "Not liked (yet)";
+
+		return (
+		    <div className="Likes">
+                <span>{ this.state.numLikes }</span>
+                <button className="LikesButton" onClick={ this.handleClick }>
+                    { text }
+                </button>
+		    </div>
+		);
+	}
+}
+
+export default Likes
